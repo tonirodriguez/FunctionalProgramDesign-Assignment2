@@ -52,7 +52,7 @@ Illustration:
 
 row axis
 ```
-
+
 ### The Terrain
 We represent our terrain as a function from positions to booleans:
 ```
