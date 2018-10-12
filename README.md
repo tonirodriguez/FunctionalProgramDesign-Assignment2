@@ -10,7 +10,7 @@ As in the previous assignments, you are encouraged to look at the Scala API docu
 
 http://www.scala-lang.org/api/current/index.html
 
-##Bloxorz
+## Bloxorz
 
 Bloxorz is a game in Flash, which you can access here. As a first step for this assignment, play it for a few levels.
 
@@ -20,7 +20,7 @@ You will quickly notice that for many levels, you are, in your head, trying to w
 
 The idea of this assignment is to code a solver for a simplified version of this game, with no orange tiles, circles or crosses on the terrain. The goal of your program, given a terrain configuration with a start position and a goal position, is to return the exact sequence of keys to type in order to reach the goal position. Naturally, we will be interested in getting the shortest path as well.
 
-##State-space Exploration
+## State-space Exploration
 The theory behind coding a solver for this game is in fact be applicable to many different problems. The general problem we are trying to solve is the following:
 
 - We start at some initial state S, and we are trying to reach an end stateT.
@@ -29,7 +29,7 @@ The theory behind coding a solver for this game is in fact be applicable to many
 - depth-first search: when we see a new state, we immediately explore its direct neighbors, and we do this all the way down, until we reach a roadblock. Then we backtrack until the first non-explored neighbor, and continue in the same vein.
 - breadth-first search: here, we proceed more cautiously. When we find the neighbors of our current state, we explore each of them for each step. The respective neighbors of these states are then stored to be explored at a later time.
 
-##Game Setup
+## Game Setup
 Let us start by setting up our platform. The trait GameDef will contain all the logic regarding how the terrain is setup, the blocks are represented and how they move.
 
 ### Positions
@@ -52,7 +52,6 @@ Illustration:
 
 row axis
 ```
-
 
 ### The Terrain
 We represent our terrain as a function from positions to booleans:
@@ -60,8 +59,6 @@ We represent our terrain as a function from positions to booleans:
 type Terrain = Pos => Boolean
 ```
 
-
-
 The function returns true for every position that is inside the terrain. Terrains can be created easily from a string representation using the methods in the file StringParserTerrain.scala.
 
 Your first task is to implement two methods in trait StringParserTerrainthat are used to parse the terrain and the start / end positions. The Scaladoc comments give precise instructions how they should be implemented.
@@ -70,7 +67,6 @@ Your first task is to implement two methods in trait StringParserTerrainthat are
 def terrainFunction(levelVector: Vector[Vector[Char]]): Pos => Boolean = ???
 def findChar(c: Char, levelVector: Vector[Vector[Char]]): Pos = ???
 ```
-
 ### Blocks
 Back in the file GameDef.scala, a block is a 2 x 1 x 1 cuboid. We represent it as a case class which contains two fields, the 2d position of both the cubes which make up the block.
 
@@ -92,7 +88,6 @@ Finally, we need to implement a method that constructs the initial block for our
 def startBlock: Block = ???
 ```
 
-
 ### Moves and Neighbors
 To record which moves we make when navigating the block, we represent the four possible moves as case objects:
 ```
@@ -109,7 +104,6 @@ def neighbors: List[(Block,Move)] = ???
 def legalNeighbors: List[(Block,Move)] = ???
 ```
 
-
 ## Solving the Game
 Now that everything is set up, we can concentrate on actually coding our solver which is defined in the file Solver.scala.
 
@@ -120,7 +114,6 @@ First, implement a function done which determines when we have reached the goal:
 def done(b: Block): Boolean = ???
 ```
 
-
 ### Finding Neighbors
 
 Then, implement a function neighborsWithHistory, which, given a block, and its history, returns a stream of neighboring blocks with the corresponding moves.
@@ -128,7 +121,7 @@ Then, implement a function neighborsWithHistory, which, given a block, and its h
 ```
 def neighborsWithHistory(b: Block, history: List[Move]): Stream[(Block, List[Move])] = ???
 ```
-
+
 As mentioned above, the history is ordered so that the most recent move is the head of the list. If you consider Level 1 as defined in Bloxorz.scala, then
 ```
 neighborsWithHistory(Block(Pos(1,1),Pos(1,1)), List(Left,Up))
@@ -141,7 +134,7 @@ Set(
   (Block(Pos(2,1),Pos(3,1)), List(Down,Left,Up))
 )
 ```
-
+
 You should implement the above example as a test case in the test suiteBloxorzSuite.
 
 ### Avoiding Circles
@@ -152,7 +145,6 @@ def newNeighborsOnly(neighbors: Stream[(Block, List[Move])],
                      explored: Set[Block]): Stream[(Block, List[Move])] = ???
 ```
 
-
 ### Example usage:
 
 ```
@@ -165,7 +157,7 @@ newNeighborsOnly(
   Set(Block(Pos(1,2),Pos(1,3)), Block(Pos(1,1),Pos(1,1)))
 )
 ```
-
+
 returns
 ```
   Set(
@@ -183,7 +175,7 @@ Now to the crux of the solver. Implement a function from, which, given an initia
 def from(initial: Stream[(Block, List[Move])],
          explored: Set[Block]): Stream[(Block, List[Move])] = ???
 ```
-
+
 Note: pay attention to how the path is constructed: as discussed in the introduction, the key to getting the shortest path for the problem is to explore the space in a breadth-first manner.
 
 Hint: The case study lecture about the water pouring problem (7.5) might help you.
@@ -193,17 +185,15 @@ Finally we can define a lazy val pathsFromStart which is a stream of all the pat
 ```
 lazy val pathsFromStart: Stream[(Block, List[Move])] = ???
 ```
-
+
 We can also define pathToGoal which is a stream of all possible pairs of goal blocks along with their history. Indeed, there can be more than one road to Rome!
 ```
 lazy val pathsToGoal: Stream[(Block, List[Move])] = ???
 ```
 
-
 To finish it off, we define solution to contain the (or one of the) shortest list(s) of moves that lead(s) to the goal.
 
 **Note: the head element of the returned List[Move] should represent the first move that the player should perform from the starting position.**
 ```
 lazy val solution: List[Move] = ???
 ```
-
