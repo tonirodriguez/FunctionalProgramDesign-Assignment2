@@ -10,9 +10,6 @@ def findCharFunc(c: Char, levelVector: Vector[Vector[Char]]): (Int,Int) = {
   if (x.size == 0) (0,0) else x(0)
 }
 
-
-
-
 def findCharImp(c: Char, levelVector: Vector[Vector[Char]]): (Int,Int) = {
   var i: Int = -1
   var j: Int = 0
@@ -26,7 +23,6 @@ def findCharImp(c: Char, levelVector: Vector[Vector[Char]]): (Int,Int) = {
   (i, j)
 }
 
-
-val c = '-'
+val c = 'o'
 val x = findCharFunc(c, level)
 val y = findCharImp(c, level)
