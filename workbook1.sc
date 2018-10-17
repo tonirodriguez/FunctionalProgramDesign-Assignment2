@@ -26,3 +26,9 @@ def findCharImp(c: Char, levelVector: Vector[Vector[Char]]): (Int,Int) = {
 val c = 'o'
 val x = findCharFunc(c, level)
 val y = findCharImp(c, level)
+
+val l = List((1, 'a'), (2, 'b'), (3,'c'))
+
+val n = l.filter(_._1  > 1)
+
+println(n)
