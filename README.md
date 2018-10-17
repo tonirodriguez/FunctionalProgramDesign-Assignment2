@@ -61,7 +61,7 @@ type Terrain = Pos => Boolean
 
 The function returns true for every position that is inside the terrain. Terrains can be created easily from a string representation using the methods in the file StringParserTerrain.scala.
 
-Your first task is to implement two methods in trait StringParserTerrainthat are used to parse the terrain and the start / end positions. The Scaladoc comments give precise instructions how they should be implemented.
+Your first task is to implement two methods in trait StringParserTerrain that are used to parse the terrain and the start / end positions. The Scaladoc comments give precise instructions how they should be implemented.
 
 ```
 def terrainFunction(levelVector: Vector[Vector[Char]]): Pos => Boolean = ???
