@@ -66,13 +66,14 @@ trait Solver extends GameDef {
    */
   def from(initial: Stream[(Block, List[Move])],
            explored: Set[Block]): Stream[(Block, List[Move])] = {
-    newNeighborsOnly(initial, explored).map{case (b, l) => }
+    //val result: Stream[(Block, List[Move])] = newNeighborsOnly(initial, explored).map{case (x: Block, y: List[Move]) => from((x,y), explored ++  Set(x)) }
+    neighborsWithHistory(initial.head._1, initial.head._2)//, explored)//.map{ case(b, h) => (b, h ++ initial.head._._2) }
   }
 
   /**
    * The stream of all paths that begin at the starting block.
    */
-  lazy val pathsFromStart: Stream[(Block, List[Move])] =
+  lazy val pathsFromStart: Stream[(Block, List[Move])] = ???
 
   /**
    * Returns a stream of all possible pairs of the goal block along
