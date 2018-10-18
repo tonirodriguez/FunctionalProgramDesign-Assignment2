@@ -54,6 +54,7 @@ object Bloxorz extends App {
   val x: Stream[(Level1.Block, List[Level1.Move])] = Level1.startBlock.legalNeighbors.toStream.map{case (x: Level1.Block, y: Level1.Move) => (x, y :: List())}
   println(x)
   println(Level1.done(Level1.Block(Level1.Pos(4,7),Level1.Pos(4,7)))) // TODO: DELETE
+  println(Level1.neighborsWithHistory(Level1.startBlock, List()))
 
 //  println(Level1.solution)  TODO: TAKE OFF
 }
