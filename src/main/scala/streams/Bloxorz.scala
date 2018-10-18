@@ -14,7 +14,7 @@ object Bloxorz extends App {
     val goal = Pos(5,8)
   }
 
-  println(InfiniteLevel.solution)
+//  println(InfiniteLevel.solution) TODO: TAKE OFF
 
   /**
    * A simple level constructed using the StringParserTerrain
@@ -30,7 +30,7 @@ object Bloxorz extends App {
         |------""".stripMargin
   }
 
-  println(Level0.solution)
+//  println(Level0.solution)  TODO: TAKE OFF
 
   /**
    * Level 1 of the official Bloxorz game
@@ -45,5 +45,15 @@ object Bloxorz extends App {
         |------ooo-""".stripMargin
   }
 
-  println(Level1.solution)
+  println(Level1.startPos)    // TODO: DELETE
+  println(Level1.startBlock)    // TODO: DELETE
+  println(Level1.startBlock.neighbors)    // TODO: DELETE
+  println(Level1.startBlock.legalNeighbors)    // TODO: DELETE
+  println(Level1.done(Level1.Block(Level1.Pos(1,1),Level1.Pos(1,1)))) // TODO: DELETE
+
+  val x: Stream[(Level1.Block, List[Level1.Move])] = Level1.startBlock.legalNeighbors.toStream.map{case (x: Level1.Block, y: Level1.Move) => (x, y :: List())}
+  println(x)
+  println(Level1.done(Level1.Block(Level1.Pos(4,7),Level1.Pos(4,7)))) // TODO: DELETE
+
+//  println(Level1.solution)  TODO: TAKE OFF
 }
