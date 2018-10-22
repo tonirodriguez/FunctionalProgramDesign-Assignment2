@@ -39,7 +39,7 @@ trait Solver extends GameDef {
    */
   def newNeighborsOnly(neighbors: Stream[(Block, List[Move])],
                        explored: Set[Block]): Stream[(Block, List[Move])] =
-    neighbors.filter{case (x: Block, y: List[Move]) => !explored.contains(x)}
+    neighbors.filter{case (b: Block, l: List[Move]) => !explored.contains(b)}
 
   /**
    * The function `from` returns the stream of all possible paths
@@ -65,21 +65,32 @@ trait Solver extends GameDef {
    * construct the correctly sorted stream.
    */
   def from(initial: Stream[(Block, List[Move])],
-           explored: Set[Block]): Stream[(Block, List[Move])] = {
-    //val result: Stream[(Block, List[Move])] = newNeighborsOnly(initial, explored).map{case (x: Block, y: List[Move]) => from((x,y), explored ++  Set(x)) }
-    neighborsWithHistory(initial.head._1, initial.head._2)//, explored)//.map{ case(b, h) => (b, h ++ initial.head._._2) }
+           explored: Set[Block]): Stream[(Block, List[Move])] = initial match{
+
+    case Stream.Empty => Stream.empty
+    case (b, l) #:: tail => {
+        val newExplored = explored + b
+        val newNeighbors = newNeighborsOnly(neighborsWithHistory(b: Block, l: List[Move]), newExplored)
+
+        newNeighbors ++ from(tail ++ newNeighbors, newExplored)
+
+    }
   }
 
   /**
    * The stream of all paths that begin at the starting block.
    */
-  lazy val pathsFromStart: Stream[(Block, List[Move])] = ???
+  lazy val pathsFromStart: Stream[(Block, List[Move])] = from((startBlock, List[Move]()) #:: Stream[(Block, List[Move])]() , Set())
 
   /**
    * Returns a stream of all possible pairs of the goal block along
    * with the history how it was reached.
    */
-  lazy val pathsToGoal: Stream[(Block, List[Move])] = ???
+  lazy val pathsToGoal: Stream[(Block, List[Move])] = {
+    pathsFromStart.filter {
+      case(b, _) => done(b)
+    }
+  }
 
   /**
    * The (or one of the) shortest sequence(s) of moves to reach the
@@ -89,6 +100,8 @@ trait Solver extends GameDef {
    * the first move that the player should perform from the starting
    * position.
    */
-//  lazy val solution: List[Move] = ??? TODO: TAKE OFF
-
+  lazy val solution: List[Move] = pathsToGoal match {
+    case Stream.Empty => Nil
+    case (block, list) #:: tail => list.reverse
+  }
 }

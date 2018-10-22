@@ -14,7 +14,7 @@ object Bloxorz extends App {
     val goal = Pos(5,8)
   }
 
-//  println(InfiniteLevel.solution) TODO: TAKE OFF
+  println(InfiniteLevel.solution)
 
   /**
    * A simple level constructed using the StringParserTerrain
@@ -30,7 +30,7 @@ object Bloxorz extends App {
         |------""".stripMargin
   }
 
-//  println(Level0.solution)  TODO: TAKE OFF
+  println(Level0.solution)
 
   /**
    * Level 1 of the official Bloxorz game
@@ -44,28 +44,6 @@ object Bloxorz extends App {
         |-----ooToo
         |------ooo-""".stripMargin
   }
-/*
-  println(Level1.startPos)    // TODO: DELETE
-  println(Level1.startBlock)    // TODO: DELETE
-  println(Level1.startBlock.neighbors)    // TODO: DELETE
-  println(Level1.startBlock.legalNeighbors)    // TODO: DELETE
-  println(Level1.done(Level1.Block(Level1.Pos(1,1),Level1.Pos(1,1)))) // TODO: DELETE
 
-  val x: Stream[(Level1.Block, List[Level1.Move])] = Level1.startBlock.legalNeighbors.toStream.map{case (x: Level1.Block, y: Level1.Move) => (x, y :: List())}
-  println(x)
-  */
-  println(Level1.done(Level1.Block(Level1.Pos(4,7),Level1.Pos(4,7)))) // TODO: DELETE
-  Level1.neighborsWithHistory(Level1.startBlock, List()).foreach(println) // TODO: DELETE
-  println("----------------------------------------------------")
-  Level1.from(Level1.neighborsWithHistory(Level1.startBlock, List()), Set()).foreach(println)
-  println("----------------------------------------------------")
-  Level1.from(
-    Stream(
-      (Level1.Block(Level1.Pos(1,2), Level1.Pos(1,3)), List(Level1.Right,Level1.Left,Level1.Up)),
-      (Level1.Block(Level1.Pos(1,1), Level1.Pos(1,1)), List(Level1.Down,Level1.Left,Level1.Left))
-    ),
-    Set(Level1.Block(Level1.Pos(1,1),Level1.Pos(1,1)), Level1.Block( Level1.Pos(1,1),Level1.Pos(1,1))))
-    .foreach(println)
-
-//  println(Level1.solution)  TODO: TAKE OFF
+  println(Level1.solution)
 }

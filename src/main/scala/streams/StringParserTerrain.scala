@@ -78,7 +78,7 @@ trait StringParserTerrain extends GameDef {
       i <- levelVector.indices
       j = levelVector(i).indexOf(c)
       if (j >= 0)
-    } yield new Pos(i, j)
+    } yield Pos(i, j)
     results(0)
   }
 
