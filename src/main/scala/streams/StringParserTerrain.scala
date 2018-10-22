@@ -57,7 +57,7 @@ trait StringParserTerrain extends GameDef {
     position: Pos => {
       try{
         val c = levelVector(position.row)(position.col)
-        if (c == '-') false else true
+        !(c == '-')
       }
       catch {
         case e: java.lang.IndexOutOfBoundsException => false
